@@ -11,12 +11,13 @@ from . serializers import RegisterSerializer
 def test_api(request):
     return JsonResponse({"message": "Users API is working"})
 
+
 @api_view(['POST'])
 def register_user(request):
+    """Register a new user using RegisterSerializer."""
+
     serializer = RegisterSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_404_BAD_REQUEST)
-
-
